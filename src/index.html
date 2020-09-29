@@ -7,33 +7,18 @@
 </head>
 <body>
 	<script>
-		const chainMaker = {
-			tempRes: [],
-				getLength() {
-					return this.tempRes.length
-				},
-				addLink(value) {
-					value  || value == 0 || isNaN(value) ?  this.tempRes.push(`( ${value} )`) : value === null ? this.tempRes.push('( null )') : this.tempRes.push('( )')
-					return this;
-				},
-				removeLink(position) {
-					if (position % 1 != 0 || this.tempRes[position - 1] == undefined) {throw new Error()}
-					this.tempRes.splice(position - 1, 1);
-					return this;
-				},
-				reverseChain() {
-					this.tempRes.reverse();
-					return this;
-				},
-				finishChain() {
-					return this.tempRes.join(`~~`)
+		class DepthCalculator {
+			calculateDepth(arr) {
+				let res = 1;
+				if (!Array.isArray(arr)) return 0
+				for (let item of arr) {
+					res = Math.max(this.calculateDepth(item) + 1, res)
 				}
-			};
-
-			console.log( chainMaker.reverseChain().reverseChain().reverseChain().addLink(NaN).reverseChain().addLink(null).addLink(1.233).addLink(true).addLink(false).removeLink(3).addLink(1.233).finishChain() )
-
-
-
+				return res;
+			}
+		}
+		let a = new DepthCalculator();
+		console.log(a.calculateDepth([1, [2], [1, [3]]]))
 	</script>
 </body>
 </html>
