@@ -7,35 +7,32 @@
 </head>
 <body>
 	<script>
-
-		const transform = (arr) => {
-			let temp =  Array.from(arr)
-			temp.map((item, i) => {
-				switch (item) {
-					case '--discard-next' :
-						i != temp.length - 1 ? delete(temp[i + 1]) : false;
-						delete(temp[i])
-						break;
-					case '--discard-prev' :
-						i != 0 && temp[i-1] != undefined ? delete(temp[i - 1]) : false;
-						delete(temp[i])
-						break;
-					case '--double-prev' :
-						i != 0 || temp[i - 1] != undefined ? temp[i] = temp[i - 1] : delete(temp[i]);
-						break; 
-					case '--double-next' :
-						temp[i + 1] != undefined ? temp[i] = temp[i + 1] : false;
-						break; 
-					default: 
-						return item;
+		const chainMaker = {
+			tempRes: [],
+				getLength() {
+					return this.tempRes.length
+				},
+				addLink(value) {
+					value  || value == 0 || isNaN(value) ?  this.tempRes.push(`( ${value} )`) : value === null ? this.tempRes.push('( null )') : this.tempRes.push('( )')
+					return this;
+				},
+				removeLink(position) {
+					if (position % 1 != 0 || this.tempRes[position - 1] == undefined) {throw new Error()}
+					this.tempRes.splice(position - 1, 1);
+					return this;
+				},
+				reverseChain() {
+					this.tempRes.reverse();
+					return this;
+				},
+				finishChain() {
+					return this.tempRes.join(`~~`)
 				}
-			})
-			return temp.filter((item) => item != undefined)
-		}
+			};
 
-		
+			console.log( chainMaker.reverseChain().reverseChain().reverseChain().addLink(NaN).reverseChain().addLink(null).addLink(1.233).addLink(true).addLink(false).removeLink(3).addLink(1.233).finishChain() )
 
-		console.log(transform( ['--double-prev', 1, 2, 3] ))
+
 
 	</script>
 </body>
