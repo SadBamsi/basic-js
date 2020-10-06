@@ -7,18 +7,32 @@
 </head>
 <body>
 	<script>
-		class DepthCalculator {
-			calculateDepth(arr) {
-				let res = 1;
-				if (!Array.isArray(arr)) return 0
-				for (let item of arr) {
-					res = Math.max(this.calculateDepth(item) + 1, res)
+		function repeater(str, options = {}) {
+			if (options) {
+				let substring = [];
+				let string = [];
+				if (String(options.addition)) {
+					let repeat = options.additionRepeatTimes || 1;
+					for (let i = 0; i < repeat; i++) {
+						substring.push(String(options.addition));
+					}
+					substring = substring.join(options.additionSeparator || '|')
+					 console.log(substring)
 				}
-				return res;
+				let repeat = options.repeatTimes || 1;
+				for ( let i = 0; i < repeat; i++ ) {
+					console.log(String(str));
+					string.push(String(str).concat(substring))
+				}
+				return string.join(options.separator || '+')
 			}
-		}
-		let a = new DepthCalculator();
-		console.log(a.calculateDepth([1, [2], [1, [3]]]))
+			return String(str);
+		};
+
+
+
+
+		console.log(repeater(null, { repeatTimes: 3, separator: '??? ', addition: null, additionRepeatTimes: 3, additionSeparator: '!!!' }))
 	</script>
 </body>
 </html>
