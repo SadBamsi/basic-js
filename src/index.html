@@ -7,32 +7,30 @@
 </head>
 <body>
 	<script>
-		function repeater(str, options = {}) {
-			if (options) {
-				let substring = [];
-				let string = [];
-				if (String(options.addition)) {
-					let repeat = options.additionRepeatTimes || 1;
-					for (let i = 0; i < repeat; i++) {
-						substring.push(String(options.addition));
-					}
-					substring = substring.join(options.additionSeparator || '|')
-					 console.log(substring)
-				}
-				let repeat = options.repeatTimes || 1;
-				for ( let i = 0; i < repeat; i++ ) {
-					console.log(String(str));
-					string.push(String(str).concat(substring))
-				}
-				return string.join(options.separator || '+')
+		class VigenereCipheringMachine {
+			constructor(straight = true) {
+				this.straight = true;
 			}
-			return String(str);
-		};
+				encrypt(message, key) {
+					let res = [];
+					let counter = 0;
+					if (!message || !key) throw new Error();
+					for (let i = 0; i < message.length; i++) {
+						res.push((message[i].toUpperCase().charCodeAt() + key[i % key.length].toUpperCase().charCodeAt()) % 26 + 65);
+					}
+					return String.fromCharCode(...res);
+					
+				}
+				decrypt() {
+					throw new CustomError('Not implemented');
+					// remove line with error and write your code here
+				}
+			}
 
+			let test = new VigenereCipheringMachine();
 
+			console.log(test.encrypt('attack at dawn!','alphonse'))
 
-
-		console.log(repeater(null, { repeatTimes: 3, separator: '??? ', addition: null, additionRepeatTimes: 3, additionSeparator: '!!!' }))
 	</script>
 </body>
 </html>
